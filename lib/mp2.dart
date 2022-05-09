@@ -107,22 +107,26 @@ class _mp2State extends State<mp2> {
                           ),
                         ),
                         Expanded(
-                            child: InkWell(onTap: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                            child: InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                              builder: (context) {
                                 return mp3();
-                              },));
-                            },
-                              child: Container(
-                          child: Center(
+                              },
+                            ));
+                          },
+                          child: Container(
+                            child: Center(
                                 child: Text(
                               "SUBMIT",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: da,
                                   fontSize: 18),
-                          )),
-                        ),
-                            ))
+                            )),
+                          ),
+                        ))
                       ],
                     ),
                     Row(
