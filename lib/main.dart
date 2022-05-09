@@ -142,6 +142,7 @@ class _mathpuzzelState extends State<mathpuzzel> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.all(5),
+                                  margin: EdgeInsets.all(5),
                                   height: 40,
                                   width: 38,
                                   decoration: BoxDecoration(
