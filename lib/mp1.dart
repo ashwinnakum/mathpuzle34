@@ -8,11 +8,8 @@ class mp1 extends StatefulWidget {
 
 class _mp1State extends State<mp1> {
   String da = "my";
-  int i=0;
-  List ab=[for(i=1;i<=75;i++)
-    {
-      i++;
-    }]
+
+
 
   @override
   Widget build(BuildContext context) {
