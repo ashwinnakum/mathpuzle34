@@ -56,17 +56,19 @@ class _mathpuzzelState extends State<mathpuzzel> {
                         color: Colors.black,
                         child: Center(
                             child: Text(
-                              "CONTINUE",
-                              style: TextStyle(
-                                  fontSize: 22, color: Colors.white),
-                            )),
+                          "CONTINUE",
+                          style: TextStyle(fontSize: 22, color: Colors.white),
+                        )),
                       ),
                     ),
-                    InkWell(onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return mp1();
-                      },));
-                    },
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return mp1();
+                          },
+                        ));
+                      },
                       child: Container(
                         margin: EdgeInsets.fromLTRB(50, 00, 50, 00),
                         height: 45,
@@ -74,10 +76,9 @@ class _mathpuzzelState extends State<mathpuzzel> {
                         color: Colors.black,
                         child: Center(
                             child: Text(
-                              "PUZZLES",
-                              style: TextStyle(
-                                  fontSize: 22, color: Colors.white),
-                            )),
+                          "PUZZLES",
+                          style: TextStyle(fontSize: 22, color: Colors.white),
+                        )),
                       ),
                     ),
                     Container(
@@ -87,9 +88,9 @@ class _mathpuzzelState extends State<mathpuzzel> {
                       color: Colors.black,
                       child: Center(
                           child: Text(
-                            "BUY PRO",
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          )),
+                        "BUY PRO",
+                        style: TextStyle(fontSize: 22, color: Colors.white),
+                      )),
                     )
                   ],
                 ),
@@ -104,84 +105,81 @@ class _mathpuzzelState extends State<mathpuzzel> {
               Expanded(
                 child: Container(
                     child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(30, 30, 140, 15),
-                          height: 65,
-                          width: 65,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("puzle/ltlicon.png"),
-                                  fit: BoxFit.fill)),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(00, 20, 20, 10),
-                          child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(30, 30, 140, 15),
+                      height: 65,
+                      width: 65,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("puzle/ltlicon.png"),
+                              fit: BoxFit.fill)),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(00, 20, 20, 10),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 42,
+                            width: 100,
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.all(5),
+                                  height: 40,
+                                  width: 38,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: Center(
+                                    child: Container(
+                                      height: 20,
+                                      width: 25,
+                                      child: Image.asset("puzle/shareus.png"),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(5),
+                                  height: 40,
+                                  width: 38,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: Center(
+                                    child: Container(
+                                      height: 25,
+                                      width: 25,
+                                      child: Image.asset("puzle/emailus.png"),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Row(
                             children: [
                               Container(
-                                height: 42,
+                                child: Center(child: Text("Privacy Policy")),
+                                height: 30,
+                                margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
                                 width: 100,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.all(5),
-                                      height: 40,
-                                      width: 38,
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      child: Center(
-                                        child: Container(
-                                          height: 20,
-                                          width: 25,
-                                          child: Image.asset(
-                                              "puzle/shareus.png"),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.all(5),
-                                      height: 40,
-                                      width: 38,
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      child: Center(
-                                        child: Container(
-                                          height: 25,
-                                          width: 25,
-                                          child: Image.asset(
-                                              "puzle/emailus.png"),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    child: Center(
-                                        child: Text("Privacy Policy")),
-                                    height: 30,
-                                    margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 2, color: Colors.black),
-                                        borderRadius:
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 2, color: Colors.black),
+                                    borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
-                                  ),
-                                ],
                               ),
                             ],
                           ),
-                        ),
-                        //Container(child: Container(height: 10,width: 10,color: Colors.blue,margin: EdgeInsets.fromLTRB(2, 80, 10, 0)),)
-                      ],
-                    )),
+                        ],
+                      ),
+                    ),
+                    //Container(child: Container(height: 10,width: 10,color: Colors.blue,margin: EdgeInsets.fromLTRB(2, 80, 10, 0)),)
+                  ],
+                )),
               ),
             ],
           ),
