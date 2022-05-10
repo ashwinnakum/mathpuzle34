@@ -1,63 +1,98 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:mathpuzle/mp1.dart';
+import 'package:mathpuzle/mp2.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'gdata.dart';
 
 void main() {
   runApp(MaterialApp(
     home: mathpuzzel(),
-    showSemanticsDebugger: false,
   ));
 }
 
 class mathpuzzel extends StatefulWidget {
-  const mathpuzzel({Key? key}) : super(key: key);
-
   @override
   State<mathpuzzel> createState() => _mathpuzzelState();
 }
 
 class _mathpuzzelState extends State<mathpuzzel> {
+  int ad = 0;
+
+  @override
+  void initState() {
+    spreferance();
+    super.initState();
+  }
+
+  spreferance() async {
+    gdata.prefs = await SharedPreferences.getInstance();
+    setState(() {
+      ad = gdata.prefs!.getInt('counter') ?? 0;
+    });
+  }
   String da = "my";
 
   @override
   Widget build(BuildContext context) {
+    double totalhight = MediaQuery.of(context).size.height;
+    double totalwidth = MediaQuery.of(context).size.width;
+
+    // double statusbarheight = MediaQuery.of(context).padding.top;
+    // double navigatorbar = MediaQuery.of(context).padding.bottom;
+    // double appbarheight = kToolbarHeight;
+
+    // print("theight==$totalhight,twidth==$totalwidth");
+
     return Scaffold(
       backgroundColor: Color(0xFF272791),
       body: SafeArea(
         child: Container(
-          height: 800,
-          width: 2000,
+          height: totalhight / 1,
+          width: totalwidth / 1,
           child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(50, 50, 50, 16),
-                child: Text(
-                  "Math Puzzle",
-                  style: TextStyle(
-                      fontSize: 40, fontFamily: da, color: Color(0xFF272791)),
+              Expanded(
+                child: Container(
+                  height: totalhight / 14,
+                  margin: EdgeInsets.fromLTRB(0, totalhight / 20, 0, 0),
+                  child: Text(
+                    "Math Puzzle",
+                    style: TextStyle(
+                        fontSize: 40, fontFamily: da, color: Color(0xFF272791)),
+                  ),
                 ),
               ),
               Container(
+                height: totalhight / 1.538461538461538,
+                width: totalwidth / 1.058823529411765,
                 child: Column(
                   children: [
                     InkWell(
                       onTap: () {
+                        // a++;
+                        // setState(() {
+                        //   prefs!.setInt('counter', a);
+                        // });
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return mp1();
+                            return mp2(ad);
                           },
                         ));
                       },
                       child: Container(
-                        margin: EdgeInsets.fromLTRB(50, 190, 50, 00),
-                        height: 45,
-                        width: 120,
+                        margin: EdgeInsets.fromLTRB(
+                            00, totalhight / 4.166666, 00, 00),
+                        height: totalhight / 17.77777,
+                        width: totalwidth / 2.4,
                         color: Colors.black,
                         child: Center(
                             child: Text(
                           "CONTINUE",
-                          style: TextStyle(fontSize: 22, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: totalhight / 26.666666,
+                              color: Colors.white,
+                              fontFamily: da),
                         )),
                       ),
                     ),
@@ -70,33 +105,39 @@ class _mathpuzzelState extends State<mathpuzzel> {
                         ));
                       },
                       child: Container(
-                        margin: EdgeInsets.fromLTRB(50, 00, 50, 00),
-                        height: 45,
-                        width: 120,
+                        // margin: EdgeInsets.fromLTRB(totalwidth/7.2, 00, totalwidth/7.2, 00),
+                        height: totalhight / 17.77777,
+                        width: totalwidth / 2.4,
                         color: Colors.black,
                         child: Center(
                             child: Text(
                           "PUZZLES",
-                          style: TextStyle(fontSize: 22, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: totalhight / 26.666666,
+                              color: Colors.white,
+                              fontFamily: da),
                         )),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(50, 00, 50, 50),
-                      height: 45,
-                      width: 120,
+                      margin: EdgeInsets.fromLTRB(
+                          00, 00, 00, totalhight / 4.166666),
+                      height: totalhight / 17.77777,
+                      width: totalwidth / 2.4,
                       color: Colors.black,
                       child: Center(
                           child: Text(
                         "BUY PRO",
-                        style: TextStyle(fontSize: 22, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: totalhight / 26.666666,
+                            color: Colors.white,
+                            fontFamily: da),
                       )),
                     )
                   ],
                 ),
-                height: 520,
-                width: 350,
-                margin: EdgeInsets.fromLTRB(18, 0, 18, 0),
+                margin:
+                    EdgeInsets.fromLTRB(totalwidth / 20, 0, totalwidth / 20, 0),
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("puzle/blackboard_main_menu.png"),
@@ -107,55 +148,60 @@ class _mathpuzzelState extends State<mathpuzzel> {
                     child: Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(30, 30, 140, 15),
-                      height: 65,
-                      width: 65,
+                      margin: EdgeInsets.fromLTRB(
+                          totalwidth / 12,
+                          totalhight / 26.6666,
+                          totalwidth / 2.571428,
+                          totalhight / 53.3333),
+                      height: totalhight / 12.30769,
+                      width: totalwidth / 5.53846,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("puzle/ltlicon.png"),
                               fit: BoxFit.fill)),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(00, 20, 20, 10),
+                      margin: EdgeInsets.fromLTRB(00, totalhight / 35,
+                          totalwidth / 18, totalhight / 80),
                       child: Column(
                         children: [
                           Container(
-                            height: 42,
-                            width: 100,
+                            height: totalhight / 16.047619,
+                            width: totalwidth / 3.6,
                             child: Row(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.all(5),
-                                  height: 40,
-                                  width: 38,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Center(
-                                    child: Container(
-                                      height: 20,
-                                      width: 25,
-                                      child: Image.asset("puzle/shareus.png"),
-                                    ),
-                                  ),
-                                ),
+                                    margin: EdgeInsets.fromLTRB(
+                                        totalwidth / 72,
+                                        totalhight / 160,
+                                        totalwidth / 72,
+                                        totalhight / 160),
+                                    height: totalhight / 20,
+                                    width: totalwidth / 9,
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(colors: [
+                                          Colors.grey,
+                                          Colors.white
+                                        ]),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    child: Icon(Icons.share)),
                                 Container(
-                                  margin: EdgeInsets.all(5),
-
-                                  height: 40,
-                                  width: 38,
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.email)),
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 72,
+                                      totalhight / 160,
+                                      totalwidth / 72,
+                                      totalhight / 160),
+                                  height: totalhight / 20,
+                                  width: totalwidth / 9,
                                   decoration: BoxDecoration(
-                                      color: Colors.grey,
+                                      gradient: LinearGradient(
+                                          colors: [Colors.grey, Colors.white]),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10))),
-                                  child: Center(
-                                    child: Container(
-                                      height: 25,
-                                      width: 25,
-                                      child: Image.asset("puzle/emailus.png"),
-                                    ),
-                                  ),
                                 )
                               ],
                             ),
@@ -164,14 +210,12 @@ class _mathpuzzelState extends State<mathpuzzel> {
                             children: [
                               Container(
                                 child: Center(child: Text("Privacy Policy")),
-                                height: 30,
-                                margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                width: 100,
+                                height: totalhight / 26.6666,
+                                width: totalwidth / 3.6,
                                 decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 2, color: Colors.black),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
+                                  border:
+                                      Border.all(width: 2, color: Colors.black),
+                                ),
                               ),
                             ],
                           ),

@@ -1,19 +1,102 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mathpuzle/mp3.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mathpuzle/wining.dart';
 
 class mp2 extends StatefulWidget {
+  int ad;
+
+  mp2(this.ad);
+
   @override
   State<mp2> createState() => _mp2State();
 }
 
 class _mp2State extends State<mp2> {
   String da = "my";
-
+  List<String> ans = [
+    "10",
+    "25",
+    "6",
+    "14",
+    "128",
+    "7",
+    "50",
+    "1025",
+    "100",
+    "3",
+    "212",
+    "3011",
+    "14",
+    "16",
+    "1",
+    "2",
+    "44",
+    "45",
+    "625",
+    "1",
+    "13",
+    "47",
+    "50",
+    "34",
+    "6",
+    "41",
+    "16",
+    "126",
+    "82",
+    "14",
+    "7",
+    "132",
+    "34",
+    "48",
+    "42",
+    "288",
+    "45",
+    "4",
+    "111",
+    "47",
+    "27",
+    "87",
+    "22",
+    "253",
+    "12",
+    "38",
+    "178",
+    "1",
+    "6",
+    "10",
+    "2",
+    "20",
+    "7",
+    "511",
+    "143547",
+    "84",
+    "11",
+    "27",
+    "3",
+    "5",
+    "39",
+    "31",
+    "10",
+    "130",
+    "22",
+    "3",
+    "14",
+    "42",
+    "164045",
+    "11",
+    "481",
+    "86",
+    "84",
+    "13",
+    "8"
+  ];
   String a = "";
 
   @override
   Widget build(BuildContext context) {
+    double totalhight = MediaQuery.of(context).size.height;
+    double totalwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color(0xFF272791),
       body: SafeArea(
@@ -24,36 +107,79 @@ class _mp2State extends State<mp2> {
             children: [
               Row(
                 children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(10, 15, 0, 0),
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("puzle/skip.png"),
-                            fit: BoxFit.fill)),
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: new Text(
+                                'Skip',
+                                style: TextStyle(fontSize: 23),
+                              ),
+                              content: new Text(
+                                'This is a placeholder. This is a placeholder.',
+                                style: TextStyle(fontFamily: "Smash"),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      "ok",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.red,
+                                          fontStyle: FontStyle.italic),
+                                    ))
+                              ],
+                            );
+                          });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(
+                          totalwidth / 36, totalhight / 53.33333, 0, 0),
+                      height: totalhight / 20,
+                      width: totalwidth / 9,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("puzle/skip.png"),
+                              fit: BoxFit.fill)),
+                    ),
                   ),
                   Container(
-                      margin: EdgeInsets.fromLTRB(50, 10, 0, 0),
-                      height: 55,
-                      width: 180,
+                      margin: EdgeInsets.fromLTRB(totalwidth / 7.2, 10, 0, 0),
+                      height: totalhight / 14.545454,
+                      width: totalwidth / 2,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("puzle/level_board.png"),
                               fit: BoxFit.fill)),
                       child: Center(
-                          child: Text(
-                        "PUZZLE 1",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 35,
-                            fontFamily: da,
-                            fontWeight: FontWeight.bold),
+                          child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 1,
+                        itemBuilder: (context, index) {
+                          return Center(
+                            child: Center(
+                              child: Text(
+                                "      PUZZLE ${widget.ad + 1}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: totalhight / 27.85714,
+                                    fontFamily: da,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          );
+                        },
                       ))),
                   Container(
-                    margin: EdgeInsets.fromLTRB(30, 15, 10, 0),
-                    height: 40,
-                    width: 40,
+                    margin: EdgeInsets.fromLTRB(totalwidth / 12,
+                        totalhight / 53.33333, totalwidth / 36, 0),
+                    height: totalhight / 20,
+                    width: totalwidth / 9,
                     child: Image.asset(
                       "puzle/hint.png",
                       fit: BoxFit.fill,
@@ -62,15 +188,28 @@ class _mp2State extends State<mp2> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                width: 360,
-                height: 330,
-                child: Image.asset("puzle/p1.png"),
+                margin: EdgeInsets.fromLTRB(0, totalhight / 80, 0, 0),
+                width: totalwidth / 1,
+                height: totalhight / 2.42424242,
+                child: PageView.builder(
+                  allowImplicitScrolling: true,
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: totalhight / 2.42424242,
+                      width: totalwidth / 1,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage(("puzle/p${widget.ad + 1}.png")))),
+                    );
+                  },
+                ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 258, 0, 0),
-                height: 100,
-                width: 360,
+                margin: EdgeInsets.fromLTRB(0, totalhight / 3.10077519, 0, 0),
+                height: totalhight / 8,
+                width: totalwidth / 1,
                 color: Colors.black,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -78,13 +217,13 @@ class _mp2State extends State<mp2> {
                     Row(
                       children: [
                         Container(
-                          height: 40,
-                          width: 230,
+                          height: totalhight / 20,
+                          width: totalwidth / 1.56521739,
                           child: Container(
                             child: Center(
                                 child: Text(
                               a,
-                              style: TextStyle(fontSize: 25),
+                              style: TextStyle(fontSize: totalhight / 32),
                             )),
                           ),
                           decoration: BoxDecoration(
@@ -99,8 +238,8 @@ class _mp2State extends State<mp2> {
                             });
                           },
                           child: Container(
-                            height: 50,
-                            width: 50,
+                            height: totalhight / 16,
+                            width: totalwidth / 7.2,
                             color: Colors.black,
                             margin: EdgeInsets.all(2),
                             child: Image.asset("puzle/delete.png"),
@@ -109,12 +248,35 @@ class _mp2State extends State<mp2> {
                         Expanded(
                             child: InkWell(
                           onTap: () {
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(
-                              builder: (context) {
-                                return mp3();
-                              },
-                            ));
+                            setState(() {
+                              if (a == "") {
+                                Fluttertoast.showToast(
+                                    msg: "Please Fill answer",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 0,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 18.0);
+                              } else if (a == ans[widget.ad]) {
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(
+                                  builder: (context) {
+                                    return mp3(widget.ad + 1);
+                                  },
+                                ));
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Wrong Answer",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 0,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 18.0);
+                                a = "";
+                              }
+                            });
                           },
                           child: Container(
                             child: Center(
@@ -123,7 +285,7 @@ class _mp2State extends State<mp2> {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: da,
-                                  fontSize: 18),
+                                  fontSize: totalhight / 44.4444),
                             )),
                           ),
                         ))
@@ -134,13 +296,14 @@ class _mp2State extends State<mp2> {
                         Expanded(
                             child: Container(
                           color: Colors.black,
-                          height: 40,
+                          height: totalhight / 20,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -151,8 +314,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -162,8 +325,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -174,8 +338,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -185,8 +349,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -197,8 +362,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -208,8 +373,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -220,8 +386,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -231,8 +397,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -243,8 +410,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -254,8 +421,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -266,8 +434,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -277,8 +445,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -289,8 +458,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -300,8 +469,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -312,8 +482,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -323,8 +493,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -335,8 +506,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -346,8 +517,9 @@ class _mp2State extends State<mp2> {
                                     ),
                                   ))),
                               Container(
-                                  margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                                  height: 39,
+                                  margin: EdgeInsets.fromLTRB(
+                                      totalwidth / 360, 0, 0, 0),
+                                  height: totalhight / 20.512820,
                                   width: 35,
                                   color: Colors.white,
                                   child: Center(
@@ -358,8 +530,8 @@ class _mp2State extends State<mp2> {
                                       });
                                     },
                                     child: Container(
-                                      height: 35,
-                                      width: 30,
+                                      height: totalhight / 22.857142,
+                                      width: totalwidth / 12,
                                       color: Colors.grey,
                                       child: Center(
                                           child: Text(
@@ -389,9 +561,11 @@ class _mp2State extends State<mp2> {
 
   String firstdata = "";
 
-  void ab(String value) {
+  int i = 0;
+
+  void ab(String i) {
     setState(() {
-      a = a + value;
+      a = a + i;
     });
   }
 }
