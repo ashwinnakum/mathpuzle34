@@ -79,7 +79,6 @@ class _mathpuzzelState extends State<mathpuzzel> {
                           builder: (context) {
                             return mp2(ad);
                           },
-
                         ));
                       },
                       child: Container(
