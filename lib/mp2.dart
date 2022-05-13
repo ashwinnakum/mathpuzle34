@@ -116,7 +116,7 @@ class _mp2State extends State<mp2> {
                             return AlertDialog(
                               title: new Text(
                                 'Skip Level',
-                                style: TextStyle(fontSize: 24),
+                                style: TextStyle(fontSize: 25),
                               ),
                               content: new Text(
                                 "If you skip this level press skip button",
