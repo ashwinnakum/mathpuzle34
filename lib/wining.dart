@@ -49,7 +49,7 @@ class _mp3State extends State<mp3> {
               InkWell(
                 onTap: () {
                   setState(() {
-                    gdata.prefs?.setInt('lvl', widget.ad);
+                    gdata.prefs?.setInt('cnt', widget.ad);
                   });
                   Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) {
