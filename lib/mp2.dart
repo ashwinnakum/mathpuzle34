@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mathpuzle/gdata.dart';
 import 'package:mathpuzle/main.dart';
 import 'package:mathpuzle/wining.dart';
 
@@ -128,9 +129,13 @@ class _mp2State extends State<mp2> {
                                       Navigator.pushReplacement(context,
                                           MaterialPageRoute(
                                         builder: (context) {
-                                          return mp2(widget.ad+1);
+                                          widget.ad = widget.ad + 1;
+                                          return mp2(widget.ad);
                                         },
                                       ));
+                                      setState(() {
+                                        gdata.prefs?.setInt('cnt', widget.ad+1);
+                                      });
                                     },
                                     child: Text(
                                       "skip",
@@ -268,7 +273,8 @@ class _mp2State extends State<mp2> {
                                 Navigator.pushReplacement(context,
                                     MaterialPageRoute(
                                   builder: (context) {
-                                    return mp3(widget.ad + 1);
+                                    widget.ad = widget.ad + 1;
+                                    return mp3(widget.ad);
                                   },
                                 ));
                               } else {
@@ -282,6 +288,8 @@ class _mp2State extends State<mp2> {
                                     fontSize: 18.0);
                                 a = "";
                               }
+
+                              gdata.prefs?.setInt('counter', widget.ad);
                             });
                           },
                           child: Container(

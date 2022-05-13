@@ -12,8 +12,6 @@ void main() {
 }
 
 class mathpuzzel extends StatefulWidget {
-
-
   @override
   State<mathpuzzel> createState() => _mathpuzzelState();
 }
@@ -81,6 +79,7 @@ class _mathpuzzelState extends State<mathpuzzel> {
                           builder: (context) {
                             return mp2(ad);
                           },
+
                         ));
                       },
                       child: Container(
