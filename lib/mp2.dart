@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mathpuzle/main.dart';
 import 'package:mathpuzle/wining.dart';
 
 class mp2 extends StatefulWidget {
@@ -114,20 +115,25 @@ class _mp2State extends State<mp2> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: new Text(
-                                'Skip',
-                                style: TextStyle(fontSize: 23),
+                                'Skip Level',
+                                style: TextStyle(fontSize: 24),
                               ),
                               content: new Text(
-                                'This is a placeholder. This is a placeholder.',
+                                "If you skip this level press skip button",
                                 style: TextStyle(fontFamily: "Smash"),
                               ),
                               actions: [
                                 TextButton(
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(
+                                        builder: (context) {
+                                          return mp2(widget.ad+1);
+                                        },
+                                      ));
                                     },
                                     child: Text(
-                                      "ok",
+                                      "skip",
                                       style: TextStyle(
                                           fontSize: 20,
                                           color: Colors.red,
