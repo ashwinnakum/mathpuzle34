@@ -1,126 +1,80 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:timer_count_down/timer_controller.dart';
-import 'package:timer_count_down/timer_count_down.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MyApp());
+class Share extends StatefulWidget {
+  const Share({Key? key}) : super(key: key);
 
-///
-/// Test app
-///
-class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Countdown Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(
-        title: 'Flutter Demo Countdown',
-      ),
-    );
+  State<Share> createState() => _ShareState();
+}
+
+class _ShareState extends State<Share> {
+  String a = "";
+  String b = "";
+  SharedPreferences? prefs;
+  TextEditingController n1 = TextEditingController();
+
+  @override
+  void initState() {
+    instant();
+    // TODO: implement initState
+    super.initState();
   }
-}
 
-///
-/// Home page
-///
-class MyHomePage extends StatefulWidget {
-  ///
-  /// AppBar title
-  ///
-  final String title;
-
-  /// Home page
-  MyHomePage({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-///
-/// Page state
-///
-class _MyHomePageState extends State<MyHomePage> {
-  // Controller
-  final CountdownController _controller =
-  new CountdownController(autoStart: true);
+  instant() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      a = prefs!.getString('action') ?? "";
+      b = prefs!.getString('action') ?? "";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  // Start
-                  ElevatedButton(
-                    child: Text('Start'),
-                    onPressed: () {
-                      _controller.start();
-                    },
-                  ),
-                  // Pause
-                  ElevatedButton(
-                    child: Text('Pause'),
-                    onPressed: () {
-                      _controller.pause();
-                    },
-                  ),
-                  // Resume
-                  ElevatedButton(
-                    child: Text('Resume'),
-                    onPressed: () {
-                      _controller.resume();
-                    },
-                  ),
-                  // Stop
-                  ElevatedButton(
-                    child: Text('Restart'),
-                    onPressed: () {
-                      _controller.restart();
-                    },
-                  ),
-                ],
-              ),
+      body: SafeArea(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(50, 50, 50, 20),
+            color: Colors.blue,
+            child: TextField(
+              controller: n1,
+              textAlign: TextAlign.center,
+              cursorColor: Colors.purple,
             ),
-            Countdown(
-              // controller: _controller,
-              seconds: 5,
-              build: (_, double time) => Text(
-                time.toString(),
-                style: TextStyle(
-                  fontSize: 80,
-                ),
-              ),
-              interval: Duration(milliseconds: 100),
-              onFinished: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Timer is done!'),
-                  ),
-                );
+          ),
+          ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  a = n1.text;
+                  prefs!.setString('action', a);
+                });
               },
+              child: Text("Setdata")),
+          Container(
+            height: 50,
+            width: 150,
+            color: Colors.grey,
+            child: Center(
+              child: Text(
+                "$b",
+                style: TextStyle(fontSize: 30),
+              ),
             ),
-          ],
-        ),
-      ),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  b = prefs!.getString('action') ?? "";
+                  n1.text = b;
+                });
+              },
+              child: Text("Getdata"))
+        ],
+      )),
     );
   }
 }
