@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mathpuzle/gdata.dart';
@@ -50,7 +49,7 @@ class _mp3State extends State<mp3> {
               InkWell(
                 onTap: () {
                   setState(() {
-                    gdata.prefs?.setInt('counter', widget.ad+1);
+                    gdata.prefs?.setInt('counter', widget.ad);
                   });
                   Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) {
@@ -80,13 +79,15 @@ class _mp3State extends State<mp3> {
                 ),
               ),
               InkWell(
-                onTap:  () {
+                onTap: () {
                   gdata.prefs?.setInt('counter', widget.ad);
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-
-                    return mathpuzzel();
-                  },));
-                },child: Container(
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) {
+                      return mathpuzzel();
+                    },
+                  ));
+                },
+                child: Container(
                   child: Center(
                       child: Text(
                     "MAIN MENU",
@@ -98,7 +99,11 @@ class _mp3State extends State<mp3> {
                   decoration: BoxDecoration(
                       boxShadow: [BoxShadow(blurRadius: 3, spreadRadius: 00)],
                       gradient: LinearGradient(
-                        colors: [Colors.blueGrey, Colors.white, Colors.blueGrey],
+                        colors: [
+                          Colors.blueGrey,
+                          Colors.white,
+                          Colors.blueGrey
+                        ],
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                 ),

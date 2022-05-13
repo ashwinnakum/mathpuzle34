@@ -32,7 +32,6 @@ class _mp1State extends State<mp1> {
             ),
             Container(
               height: totalhight / 1.28,
-              width: 150,
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4),
@@ -41,12 +40,12 @@ class _mp1State extends State<mp1> {
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.fromLTRB(
-                        totalwidth / 130,
-                        totalhight / 265.6666666,
+                        totalwidth / 120,
+                        totalhight / 266.6666666,
                         totalwidth / 120,
                         totalhight / 266.6666666),
-                    height: totalhight / 30,
-                    width: totalwidth / 11,
+                    height: totalhight / 16,
+                    width: totalwidth / 6.5,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage("puzle/lock.png"),
@@ -128,12 +127,12 @@ class _next1State extends State<next1> {
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.fromLTRB(
-                        totalwidth / 130,
-                        totalhight / 265.6666666,
+                        totalwidth / 120,
+                        totalhight / 266.6666666,
                         totalwidth / 120,
                         totalhight / 266.6666666),
-                    height: 35,
-                    width: 40,
+                    height: totalhight / 16,
+                    width: totalwidth / 6.5,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage("puzle/lock.png"),
