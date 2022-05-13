@@ -28,7 +28,7 @@ class _mathpuzzelState extends State<mathpuzzel> {
   spreferance() async {
     gdata.prefs = await SharedPreferences.getInstance();
     setState(() {
-      ad = gdata.prefs!.getInt('counter') ?? 0;
+      ad = gdata.prefs!.getInt('lvl') ?? 0;
     });
   }
 
