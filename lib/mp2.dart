@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mathpuzle/gdata.dart';
-import 'package:mathpuzle/main.dart';
 import 'package:mathpuzle/wining.dart';
 
 class mp2 extends StatefulWidget {
@@ -16,6 +15,8 @@ class mp2 extends StatefulWidget {
 
 class _mp2State extends State<mp2> {
   String da = "my";
+  int m = 0, n = 0;
+
   List<String> ans = [
     "10",
     "25",
@@ -126,6 +127,19 @@ class _mp2State extends State<mp2> {
                               actions: [
                                 TextButton(
                                     onPressed: () {
+                                      gdata.statuslist[widget.ad] = "skip";
+                                      gdata.prefs!.setString(
+                                          "status${widget.ad}", "skip");
+                                      setState(() {
+                                        widget.ad++;
+                                      });
+                                      gdata.prefs!.setInt("cnt", widget.ad);
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(
+                                        builder: (context) {
+                                          return mp2(widget.ad);
+                                        },
+                                      ));
                                       Navigator.pushReplacement(context,
                                           MaterialPageRoute(
                                         builder: (context) {
@@ -134,7 +148,8 @@ class _mp2State extends State<mp2> {
                                         },
                                       ));
                                       setState(() {
-                                        gdata.prefs?.setInt('cnt', widget.ad+1);
+                                        gdata.prefs
+                                            ?.setInt('cnt', widget.ad + 1);
                                       });
                                     },
                                     child: Text(
@@ -165,27 +180,45 @@ class _mp2State extends State<mp2> {
                       width: totalwidth / 2,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("puzle/level_board.png"),
+                              image: AssetImage(
+                                "puzle/level_board.png",
+                              ),
                               fit: BoxFit.fill)),
                       child: Center(
-                          child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                          return Center(
-                            child: Center(
-                              child: Text(
-                                "      PUZZLE ${widget.ad + 1}",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: totalhight / 27.85714,
-                                    fontFamily: da,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          );
-                        },
+                          child: Text(
+                        "LEVEL ${widget.ad + 1}",
+                        style: TextStyle(
+                            fontSize: totalhight / 27.85714,
+                            fontFamily: da,
+                            fontWeight: FontWeight.bold),
                       ))),
+                  // Container(
+                  //     margin: EdgeInsets.fromLTRB(totalwidth / 7.2, 10, 0, 0),
+                  //     height: totalhight / 14.545454,
+                  //     width: totalwidth / 2,
+                  //     decoration: BoxDecoration(
+                  //         image: DecorationImage(
+                  //             image: AssetImage("puzle/level_board.png"),
+                  //             fit: BoxFit.fill)),
+                  //     child: Center(
+                  //         child: ListView.builder(
+                  //       scrollDirection: Axis.horizontal,
+                  //       itemCount: 1,
+                  //       itemBuilder: (context, index) {
+                  //         return Center(
+                  //           child: Center(
+                  //             child: Text(
+                  //               "     PUZZLE ${widget.ad + 1}",
+                  //               textAlign: TextAlign.center,
+                  //               style: TextStyle(
+                  //                   fontSize: totalhight / 27.85714,
+                  //                   fontFamily: da,
+                  //                   fontWeight: FontWeight.bold),
+                  //             ),
+                  //           ),
+                  //         );
+                  //       },
+                  //     ))),
                   Container(
                     margin: EdgeInsets.fromLTRB(totalwidth / 12,
                         totalhight / 53.33333, totalwidth / 36, 0),
@@ -260,23 +293,38 @@ class _mp2State extends State<mp2> {
                             child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (a == "") {
-                                Fluttertoast.showToast(
-                                    msg: "Please Fill answer",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 0,
-                                    backgroundColor: Colors.grey,
-                                    textColor: Colors.white,
-                                    fontSize: 18.0);
-                              } else if (a == ans[widget.ad]) {
-                                Navigator.pushReplacement(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    widget.ad = widget.ad + 1;
-                                    return mp3(widget.ad);
-                                  },
-                                ));
+                              if (a == ans[widget.ad]) {
+                                String str = gdata.statuslist[widget.ad];
+                                if (str == "clear") {
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(
+                                    builder: (context) {
+                                      return mp3(widget.ad);
+                                    },
+                                  ));
+                                } else if (str == "skip") {
+                                  gdata.statuslist[widget.ad] = "clear";
+                                  gdata.prefs!
+                                      .setString("status${widget.ad}", "clear");
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(
+                                    builder: (context) {
+                                      return mp3(widget.ad);
+                                    },
+                                  ));
+                                } else {
+                                  gdata.statuslist[widget.ad] = "clear";
+                                  gdata.prefs!
+                                      .setString("status${widget.ad}", "clear");
+                                  widget.ad++;
+                                  gdata.prefs!.setInt("cnt", widget.ad);
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(
+                                    builder: (context) {
+                                      return mp3(widget.ad);
+                                    },
+                                  ));
+                                }
                               } else {
                                 Fluttertoast.showToast(
                                     msg: "Wrong Answer",
@@ -288,8 +336,25 @@ class _mp2State extends State<mp2> {
                                     fontSize: 18.0);
                                 a = "";
                               }
-
-                              gdata.prefs?.setInt('counter', widget.ad);
+                              // if (a == "") {
+                              //   Fluttertoast.showToast(
+                              //       msg: "Please Fill answer",
+                              //       toastLength: Toast.LENGTH_SHORT,
+                              //       gravity: ToastGravity.BOTTOM,
+                              //       timeInSecForIosWeb: 0,
+                              //       backgroundColor: Colors.grey,
+                              //       textColor: Colors.white,
+                              //       fontSize: 18.0);
+                              // } else if (a == ans[widget.ad]) {
+                              //   Navigator.pushReplacement(context,
+                              //       MaterialPageRoute(
+                              //     builder: (context) {
+                              //       widget.ad = widget.ad + 1;
+                              //       return mp3(widget.ad);
+                              //     },
+                              //   ));
+                              // }
+                              // gdata.prefs?.setInt('counter', widget.ad);
                             });
                           },
                           child: Container(
@@ -312,249 +377,251 @@ class _mp2State extends State<mp2> {
                           color: Colors.black,
                           height: totalhight / 20,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("1");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "1",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("2");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "2",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("3");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "3",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("4");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "4",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("5");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "5",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("6");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "6",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("7");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "7",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("8");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "8",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("9");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "9",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      totalwidth / 360, 0, 0, 0),
-                                  height: totalhight / 20.512820,
-                                  width: 35,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ab("0");
-                                      });
-                                    },
-                                    child: Container(
-                                      height: totalhight / 22.857142,
-                                      width: totalwidth / 12,
-                                      color: Colors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "0",
-                                        style: TextStyle(fontSize: 22),
-                                      )),
-                                    ),
-                                  ))),
-                            ],
+                            children: sum(),
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // children: [sum();
+                            // Container(
+                            //     // margin: EdgeInsets.fromLTRB(
+                            //     //     totalwidth / 360, 0, 0, 0),
+                            //     // height: totalhight / 20.512820,
+                            //     // width: 35,
+                            //     // color: Colors.white,
+                            //     // child: Center(
+                            //     //     child: InkWell(
+                            //     //   onTap: () {
+                            //     //     setState(() {
+                            //     //       ab("1");
+                            //     //     });
+                            //     //   },
+                            //     //   child: Container(
+                            //     //     height: totalhight / 22.857142,
+                            //     //     width: totalwidth / 12,
+                            //     //     color: Colors.grey,
+                            //     //     child: Center(
+                            //     //         child: Text(
+                            //     //       "1",
+                            //     //       style: TextStyle(fontSize: 22),
+                            //     //     )),
+                            //     //   ),
+                            //     // ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("2");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "2",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("3");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "3",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("4");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "4",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("5");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "5",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("6");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "6",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("7");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "7",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("8");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "8",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("9");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "9",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
+                            // Container(
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("0");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "0",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),)
+                            // ),
+                            // ]
                           ),
                         ))
                       ],
@@ -581,5 +648,42 @@ class _mp2State extends State<mp2> {
     setState(() {
       a = a + i;
     });
+  }
+
+  List<Widget> sum() {
+    List<Widget> dd = [];
+    for (int i = 0; i <= 9; i++) {
+      dd.add(Expanded(
+          child: InkWell(
+        onTap: () {
+          setState(() {
+            a = "$a$i";
+          });
+        },
+        child: Container(
+            height: 35,
+            width: 30,
+            color: Colors.white,
+            child: Center(
+                child: InkWell(
+              onTap: () {
+                setState(() {
+                  a = "$a$i";
+                });
+              },
+              child: Container(
+                height: 35,
+                width: 30,
+                color: Colors.grey,
+                child: Center(
+                    child: Text(
+                  "$i",
+                  style: TextStyle(fontSize: 15),
+                )),
+              ),
+            ))),
+      )));
+    }
+    return dd;
   }
 }

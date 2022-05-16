@@ -62,7 +62,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - puzle/
+   - puzle/
   fonts:
     - family: my
       fonts:

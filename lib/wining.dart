@@ -80,7 +80,7 @@ class _mp3State extends State<mp3> {
               ),
               InkWell(
                 onTap: () {
-                  gdata.prefs?.setInt('counter', widget.ad);
+                  gdata.prefs?.setInt('cnt', widget.ad);
                   Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) {
                       return mathpuzzel();
