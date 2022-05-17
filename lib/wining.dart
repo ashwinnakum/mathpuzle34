@@ -51,9 +51,10 @@ class _mp3State extends State<mp3> {
                   setState(() {
                     gdata.prefs?.setInt('cnt', widget.ad);
                   });
+                  gdata.prefs!.setString("status${widget.ad}", "skip");
                   Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) {
-                      return mp2(widget.ad);
+                      return mp2(widget.ad++);
                     },
                   ));
                 },

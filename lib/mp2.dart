@@ -111,56 +111,71 @@ class _mp2State extends State<mp2> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () async {
-                      await showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: new Text(
-                                'Skip Level',
-                                style: TextStyle(fontSize: 25),
-                              ),
-                              content: new Text(
-                                "If you skip this level press skip button",
-                                style: TextStyle(fontFamily: "Smash"),
-                              ),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      gdata.statuslist[widget.ad] = "skip";
-                                      gdata.prefs!.setString(
-                                          "status${widget.ad}", "skip");
-                                      setState(() {
-                                        widget.ad++;
-                                      });
-                                      gdata.prefs!.setInt("cnt", widget.ad);
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(
-                                        builder: (context) {
-                                          return mp2(widget.ad);
-                                        },
-                                      ));
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(
-                                        builder: (context) {
-                                          return mp2(widget.ad);
-                                        },
-                                      ));
-                                      setState(() {
-                                        gdata.prefs
-                                            ?.setInt('cnt', widget.ad + 1);
-                                      });
-                                    },
-                                    child: Text(
-                                      "skip",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.red,
-                                          fontStyle: FontStyle.italic),
-                                    ))
-                              ],
-                            );
-                          });
+                    onTap: () {
+                      String str = gdata.statuslist[widget.ad];
+                      if (str == "clear") {
+                        setState(() {
+                          widget.ad++;
+                        });
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) {
+                            return mp2(widget.ad);
+                          },
+                        ));
+                      } else {
+                        gdata.statuslist[widget.ad] = "skip";
+                        gdata.prefs!.setString("status${widget.ad}", "skip");
+                        setState(() {
+                          widget.ad++;
+                        });
+                        gdata.prefs!.setInt("cnt", widget.ad);
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) {
+                            return mp2(widget.ad);
+                          },
+                        ));
+                      }
+
+                      // await showDialog(
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return AlertDialog(
+                      //         title: new Text(
+                      //           'Skip Level',
+                      //           style: TextStyle(fontSize: 25),
+                      //         ),
+                      //         content: new Text(
+                      //           "If you skip this level press skip button",
+                      //           style: TextStyle(fontFamily: "Smash"),
+                      //         ),
+                      //         actions: [
+                      //           TextButton(
+                      //               onPressed: () {
+                      //                 gdata.statuslist[widget.ad] = "skip";
+                      //                 gdata.prefs!.setString(
+                      //                     "status${widget.ad}", "skip");
+                      //                 setState(() {
+                      //                   widget.ad++;
+                      //                 });
+                      //                 gdata.prefs!.setInt("cnt", widget.ad);
+                      //                 Navigator.pushReplacement(context,
+                      //                     MaterialPageRoute(
+                      //                   builder: (context) {
+                      //                     return mp2(widget.ad);
+                      //                   },
+                      //                 ));
+                      //
+                      //               },
+                      //               child: Text(
+                      //                 "skip",
+                      //                 style: TextStyle(
+                      //                     fontSize: 20,
+                      //                     color: Colors.red,
+                      //                     fontStyle: FontStyle.italic),
+                      //               ))
+                      //         ],
+                      //       );
+                      //     });
                     },
                     child: Container(
                       margin: EdgeInsets.fromLTRB(
@@ -293,8 +308,12 @@ class _mp2State extends State<mp2> {
                           onTap: () {
                             setState(() {
                               if (a == ans[widget.ad]) {
+                                print(gdata.statuslist);
                                 String str = gdata.statuslist[widget.ad];
                                 if (str == "clear") {
+                                  setState(() {
+                                    widget.ad++;
+                                  });
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
@@ -305,6 +324,9 @@ class _mp2State extends State<mp2> {
                                   gdata.statuslist[widget.ad] = "clear";
                                   gdata.prefs!
                                       .setString("status${widget.ad}", "clear");
+                                  setState(() {
+                                    widget.ad++;
+                                  });
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
@@ -315,8 +337,11 @@ class _mp2State extends State<mp2> {
                                   gdata.statuslist[widget.ad] = "clear";
                                   gdata.prefs!
                                       .setString("status${widget.ad}", "clear");
-                                  widget.ad++;
                                   gdata.prefs!.setInt("cnt", widget.ad);
+                                  setState(() {
+                                    widget.ad++;
+                                  });
+
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
@@ -380,29 +405,29 @@ class _mp2State extends State<mp2> {
                             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             // children: [sum();
                             // Container(
-                            //     // margin: EdgeInsets.fromLTRB(
-                            //     //     totalwidth / 360, 0, 0, 0),
-                            //     // height: totalhight / 20.512820,
-                            //     // width: 35,
-                            //     // color: Colors.white,
-                            //     // child: Center(
-                            //     //     child: InkWell(
-                            //     //   onTap: () {
-                            //     //     setState(() {
-                            //     //       ab("1");
-                            //     //     });
-                            //     //   },
-                            //     //   child: Container(
-                            //     //     height: totalhight / 22.857142,
-                            //     //     width: totalwidth / 12,
-                            //     //     color: Colors.grey,
-                            //     //     child: Center(
-                            //     //         child: Text(
-                            //     //       "1",
-                            //     //       style: TextStyle(fontSize: 22),
-                            //     //     )),
-                            //     //   ),
-                            //     // ))),
+                            //     margin: EdgeInsets.fromLTRB(
+                            //         totalwidth / 360, 0, 0, 0),
+                            //     height: totalhight / 20.512820,
+                            //     width: 35,
+                            //     color: Colors.white,
+                            //     child: Center(
+                            //         child: InkWell(
+                            //       onTap: () {
+                            //         setState(() {
+                            //           ab("1");
+                            //         });
+                            //       },
+                            //       child: Container(
+                            //         height: totalhight / 22.857142,
+                            //         width: totalwidth / 12,
+                            //         color: Colors.grey,
+                            //         child: Center(
+                            //             child: Text(
+                            //           "1",
+                            //           style: TextStyle(fontSize: 22),
+                            //         )),
+                            //       ),
+                            //     ))),
                             // Container(
                             //     margin: EdgeInsets.fromLTRB(
                             //         totalwidth / 360, 0, 0, 0),
@@ -660,6 +685,7 @@ class _mp2State extends State<mp2> {
           });
         },
         child: Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 7),
             height: 40,
             width: 35,
             color: Colors.black,

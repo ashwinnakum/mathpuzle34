@@ -32,16 +32,14 @@ class _mathpuzzelState extends State<mathpuzzel> {
     setState(() {
       ad = gdata.prefs!.getInt('cnt') ?? 0;
     });
-    for(int i=0;i<75;i++)
-      {
-        String levelstatus = gdata.prefs!.getString("status$i")??"pending";
-        gdata.statuslist.add(levelstatus);
-        print(gdata.statuslist);
-      }
+    for (int i = 0; i < 76; i++) {
+      String levelstatus = gdata.prefs!.getString("status$i") ?? "pending";
+      gdata.statuslist.add(levelstatus);
+    }
+    print(gdata.statuslist);
     setState(() {
       status = true;
     });
-
   }
 
   String da = "my";
@@ -90,7 +88,7 @@ class _mathpuzzelState extends State<mathpuzzel> {
                               // setState(() {
                               //   prefs!.setInt('counter', a);
                               // });
-                              Navigator.push(context, MaterialPageRoute(
+                              Navigator.pushReplacement(context, MaterialPageRoute(
                                 builder: (context) {
                                   return mp2(ad!);
                                 },
@@ -114,7 +112,7 @@ class _mathpuzzelState extends State<mathpuzzel> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
+                              Navigator.pushReplacement(context, MaterialPageRoute(
                                 builder: (context) {
                                   return mp1();
                                 },
