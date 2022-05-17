@@ -143,7 +143,6 @@ class _mp2State extends State<mp2> {
                                       Navigator.pushReplacement(context,
                                           MaterialPageRoute(
                                         builder: (context) {
-                                          widget.ad = widget.ad + 1;
                                           return mp2(widget.ad);
                                         },
                                       ));
@@ -661,9 +660,9 @@ class _mp2State extends State<mp2> {
           });
         },
         child: Container(
-            height: 35,
-            width: 30,
-            color: Colors.white,
+            height: 40,
+            width: 35,
+            color: Colors.black,
             child: Center(
                 child: InkWell(
               onTap: () {
@@ -673,12 +672,14 @@ class _mp2State extends State<mp2> {
               },
               child: Container(
                 height: 35,
-                width: 30,
-                color: Colors.grey,
+                width: 33,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.blueGrey, Colors.grey, Colors.white])),
                 child: Center(
                     child: Text(
                   "$i",
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 20),
                 )),
               ),
             ))),

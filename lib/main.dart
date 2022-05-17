@@ -32,7 +32,7 @@ class _mathpuzzelState extends State<mathpuzzel> {
     setState(() {
       ad = gdata.prefs!.getInt('cnt') ?? 0;
     });
-    for(int i=0;i<15;i++)
+    for(int i=0;i<75;i++)
       {
         String levelstatus = gdata.prefs!.getString("status$i")??"pending";
         gdata.statuslist.add(levelstatus);
