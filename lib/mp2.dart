@@ -125,6 +125,9 @@ class _mp2State extends State<mp2> {
                       } else {
                         gdata.statuslist[widget.ad] = "skip";
                         gdata.prefs!.setString("status${widget.ad}", "skip");
+                        gdata.statuslist[widget.ad + 1] = "skip";
+                        gdata.prefs!
+                            .setString("status${widget.ad + 1}", "skip");
                         setState(() {
                           widget.ad++;
                         });

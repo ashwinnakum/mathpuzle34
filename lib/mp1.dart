@@ -44,18 +44,24 @@ class _mp1State extends State<mp1> {
                   int abc = gdata.prefs!.getInt("cnt") ?? 0;
                   if (ll == "clear") {
                     return InkWell(
-                      onTap:() {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                          return mp2(index);
-                        },));
-                      },child: Container(
+                      onTap: () {
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) {
+                            return mp2(index);
+                          },
+                        ));
+                      },
+                      child: Container(
                         child: Center(
                             child: Text(
                           "${index + 1}",
                           style: TextStyle(fontSize: 55, fontFamily: da),
                         )),
-                        margin: EdgeInsets.fromLTRB(totalwidth / 60,
-                            totalhight / 120, totalwidth / 60, totalhight / 120),
+                        margin: EdgeInsets.fromLTRB(
+                            totalwidth / 60,
+                            totalhight / 120,
+                            totalwidth / 60,
+                            totalhight / 120),
                         height: totalhight / 16,
                         width: totalwidth / 6.5,
                         decoration: BoxDecoration(
@@ -69,19 +75,25 @@ class _mp1State extends State<mp1> {
                       ),
                     );
                   } else if (ll == "skip") {
-                    return InkWell(onTap: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                        return mp2(index);
-                      },));
-                    },
+                    return InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) {
+                            return mp2(index);
+                          },
+                        ));
+                      },
                       child: Container(
                         child: Center(
                             child: Text(
                           "${index + 1}",
                           style: TextStyle(fontSize: 55, fontFamily: da),
                         )),
-                        margin: EdgeInsets.fromLTRB(totalwidth / 60,
-                            totalhight / 120, totalwidth / 60, totalhight / 120),
+                        margin: EdgeInsets.fromLTRB(
+                            totalwidth / 60,
+                            totalhight / 120,
+                            totalwidth / 60,
+                            totalhight / 120),
                         height: totalhight / 16,
                         width: totalwidth / 6.5,
                         decoration: BoxDecoration(
@@ -91,8 +103,7 @@ class _mp1State extends State<mp1> {
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     );
-                  }
-                  else {
+                  } else {
                     return Container(
                       margin: EdgeInsets.fromLTRB(
                           totalwidth / 120,
