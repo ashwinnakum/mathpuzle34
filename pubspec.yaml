@@ -38,6 +38,7 @@ dependencies:
   timer_count_down:
   shared_preferences:
   fluttertoast:
+  awesome_dialog:
 
 
 dev_dependencies:
