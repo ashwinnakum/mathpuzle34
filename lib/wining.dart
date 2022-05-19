@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mathpuzle/gdata.dart';
 import 'package:mathpuzle/main.dart';
 import 'package:mathpuzle/mp2.dart';
 
@@ -34,7 +33,7 @@ class _mp3State extends State<mp3> {
                 margin: EdgeInsets.fromLTRB(totalwidth / 36,
                     totalhight / 26.666666, totalwidth / 36, 00),
                 child: Text(
-                  "PUZZLE ${widget.ad} COMPLETED",
+                  "PUZZLE ${widget.ad + 1} COMPLETED",
                   style: TextStyle(
                       color: Color(0xFF272791), fontSize: 23, fontFamily: da),
                 ),
@@ -48,13 +47,9 @@ class _mp3State extends State<mp3> {
               ),
               InkWell(
                 onTap: () {
-                  setState(() {
-                    gdata.prefs?.setInt('cnt', widget.ad);
-                  });
-                  gdata.prefs!.setString("status${widget.ad}", "skip");
                   Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) {
-                      return mp2(widget.ad++);
+                      return mp2(widget.ad + 1);
                     },
                   ));
                 },
@@ -81,7 +76,6 @@ class _mp3State extends State<mp3> {
               ),
               InkWell(
                 onTap: () {
-                  gdata.prefs?.setInt('cnt', widget.ad);
                   Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) {
                       return mathpuzzel();

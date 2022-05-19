@@ -8,6 +8,7 @@ import 'gdata.dart';
 void main() {
   runApp(MaterialApp(
     home: mathpuzzel(),
+    debugShowCheckedModeBanner: false,
   ));
 }
 

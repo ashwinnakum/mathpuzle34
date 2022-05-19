@@ -113,72 +113,31 @@ class _mp2State extends State<mp2> {
                   InkWell(
                     onTap: () {
                       String str = gdata.statuslist[widget.ad];
-                      if (str == "clear") {
-                        setState(() {
-                          widget.ad++;
-                        });
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder: (context) {
-                            return mp2(widget.ad);
-                          },
-                        ));
-                      } else {
-                        gdata.statuslist[widget.ad] = "skip";
-                        gdata.prefs!.setString("status${widget.ad}", "skip");
-                        gdata.statuslist[widget.ad + 1] = "skip";
-                        gdata.prefs!
-                            .setString("status${widget.ad + 1}", "skip");
-                        setState(() {
-                          widget.ad++;
-                        });
-                        gdata.prefs!.setInt("cnt", widget.ad);
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                          builder: (context) {
-                            return mp2(widget.ad);
-                          },
-                        ));
-                      }
-
-                      // await showDialog(
-                      //     context: context,
-                      //     builder: (BuildContext context) {
-                      //       return AlertDialog(
-                      //         title: new Text(
-                      //           'Skip Level',
-                      //           style: TextStyle(fontSize: 25),
-                      //         ),
-                      //         content: new Text(
-                      //           "If you skip this level press skip button",
-                      //           style: TextStyle(fontFamily: "Smash"),
-                      //         ),
-                      //         actions: [
-                      //           TextButton(
-                      //               onPressed: () {
-                      //                 gdata.statuslist[widget.ad] = "skip";
-                      //                 gdata.prefs!.setString(
-                      //                     "status${widget.ad}", "skip");
-                      //                 setState(() {
-                      //                   widget.ad++;
-                      //                 });
-                      //                 gdata.prefs!.setInt("cnt", widget.ad);
-                      //                 Navigator.pushReplacement(context,
-                      //                     MaterialPageRoute(
-                      //                   builder: (context) {
-                      //                     return mp2(widget.ad);
-                      //                   },
-                      //                 ));
-                      //
-                      //               },
-                      //               child: Text(
-                      //                 "skip",
-                      //                 style: TextStyle(
-                      //                     fontSize: 20,
-                      //                     color: Colors.red,
-                      //                     fontStyle: FontStyle.italic),
-                      //               ))
-                      //         ],
-                      //       );
-                      //     });
+                      setState(() {
+                        if (str == "clear") {
+                          setState(() {
+                            widget.ad++;
+                          });
+                          gdata.prefs!.setInt("cnt", widget.ad);
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return mp2(widget.ad);
+                            },
+                          ));
+                        } else {
+                          gdata.statuslist[widget.ad] = "skip";
+                          gdata.prefs!.setString("status${widget.ad}", "skip");
+                          setState(() {
+                            widget.ad++;
+                          });
+                          gdata.prefs!.setInt("cnt", widget.ad);
+                          Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context) {
+                              return mp2(widget.ad);
+                            },
+                          ));
+                        }
+                      });
                     },
                     child: Container(
                       margin: EdgeInsets.fromLTRB(
@@ -203,47 +162,51 @@ class _mp2State extends State<mp2> {
                               fit: BoxFit.fill)),
                       child: Center(
                           child: Text(
-                        "LEVEL ${widget.ad + 1}",
+                        "PUZZLE ${widget.ad + 1}",
                         style: TextStyle(
                             fontSize: totalhight / 27.85714,
                             fontFamily: da,
                             fontWeight: FontWeight.bold),
                       ))),
-                  // Container(
-                  //     margin: EdgeInsets.fromLTRB(totalwidth / 7.2, 10, 0, 0),
-                  //     height: totalhight / 14.545454,
-                  //     width: totalwidth / 2,
-                  //     decoration: BoxDecoration(
-                  //         image: DecorationImage(
-                  //             image: AssetImage("puzle/level_board.png"),
-                  //             fit: BoxFit.fill)),
-                  //     child: Center(
-                  //         child: ListView.builder(
-                  //       scrollDirection: Axis.horizontal,
-                  //       itemCount: 1,
-                  //       itemBuilder: (context, index) {
-                  //         return Center(
-                  //           child: Center(
-                  //             child: Text(
-                  //               "     PUZZLE ${widget.ad + 1}",
-                  //               textAlign: TextAlign.center,
-                  //               style: TextStyle(
-                  //                   fontSize: totalhight / 27.85714,
-                  //                   fontFamily: da,
-                  //                   fontWeight: FontWeight.bold),
-                  //             ),
-                  //           ),
-                  //         );
-                  //       },
-                  //     ))),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(totalwidth / 12,
-                        totalhight / 53.33333, totalwidth / 36, 0),
-                    height: totalhight / 20,
-                    width: totalwidth / 9,
-                    child: Image.asset(
-                      "puzle/hint.png",
-                      fit: BoxFit.fill,
+                  InkWell(
+                    onTap: () async {
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: new Text(
+                                'Hint',
+                                style: TextStyle(fontSize: 25),
+                              ),
+                              content: new Text(
+                                ans[widget.ad],
+                                style: TextStyle(fontFamily: "Smash"),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      "ok",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.red,
+                                          fontStyle: FontStyle.italic),
+                                    ))
+                              ],
+                            );
+                          });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(totalwidth / 12,
+                          totalhight / 53.33333, totalwidth / 36, 0),
+                      height: totalhight / 20,
+                      width: totalwidth / 9,
+                      child: Image.asset(
+                        "puzle/hint.png",
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   )
                 ],
@@ -253,8 +216,6 @@ class _mp2State extends State<mp2> {
                 width: totalwidth / 1,
                 height: totalhight / 2.42424242,
                 child: PageView.builder(
-                  allowImplicitScrolling: true,
-                  itemCount: 1,
                   itemBuilder: (context, index) {
                     return Container(
                       height: totalhight / 2.42424242,
@@ -311,15 +272,14 @@ class _mp2State extends State<mp2> {
                           onTap: () {
                             setState(() {
                               if (a == ans[widget.ad]) {
-                                print(gdata.statuslist);
                                 String str = gdata.statuslist[widget.ad];
+                                print(str);
                                 if (str == "clear") {
-                                  setState(() {
-                                    widget.ad++;
-                                  });
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
+                                      widget.ad++;
+                                      gdata.prefs!.setInt("cnt", widget.ad);
                                       return mp3(widget.ad);
                                     },
                                   ));
@@ -327,9 +287,7 @@ class _mp2State extends State<mp2> {
                                   gdata.statuslist[widget.ad] = "clear";
                                   gdata.prefs!
                                       .setString("status${widget.ad}", "clear");
-                                  setState(() {
-                                    widget.ad++;
-                                  });
+                                  print(gdata.statuslist);
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
@@ -340,15 +298,14 @@ class _mp2State extends State<mp2> {
                                   gdata.statuslist[widget.ad] = "clear";
                                   gdata.prefs!
                                       .setString("status${widget.ad}", "clear");
-                                  gdata.prefs!.setInt("cnt", widget.ad);
                                   setState(() {
                                     widget.ad++;
                                   });
-
+                                  gdata.prefs!.setInt("cnt", widget.ad);
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
-                                      return mp3(widget.ad);
+                                      return mp3(widget.ad-1);
                                     },
                                   ));
                                 }
@@ -363,25 +320,6 @@ class _mp2State extends State<mp2> {
                                     fontSize: 18.0);
                                 a = "";
                               }
-                              // if (a == "") {
-                              //   Fluttertoast.showToast(
-                              //       msg: "Please Fill answer",
-                              //       toastLength: Toast.LENGTH_SHORT,
-                              //       gravity: ToastGravity.BOTTOM,
-                              //       timeInSecForIosWeb: 0,
-                              //       backgroundColor: Colors.grey,
-                              //       textColor: Colors.white,
-                              //       fontSize: 18.0);
-                              // } else if (a == ans[widget.ad]) {
-                              //   Navigator.pushReplacement(context,
-                              //       MaterialPageRoute(
-                              //     builder: (context) {
-                              //       widget.ad = widget.ad + 1;
-                              //       return mp3(widget.ad);
-                              //     },
-                              //   ));
-                              // }
-                              // gdata.prefs?.setInt('counter', widget.ad);
                             });
                           },
                           child: Container(
@@ -431,224 +369,6 @@ class _mp2State extends State<mp2> {
                             //         )),
                             //       ),
                             //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("2");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "2",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("3");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "3",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("4");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "4",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("5");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "5",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("6");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "6",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("7");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "7",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("8");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "8",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("9");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "9",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),
-                            // Container(
-                            //     margin: EdgeInsets.fromLTRB(
-                            //         totalwidth / 360, 0, 0, 0),
-                            //     height: totalhight / 20.512820,
-                            //     width: 35,
-                            //     color: Colors.white,
-                            //     child: Center(
-                            //         child: InkWell(
-                            //       onTap: () {
-                            //         setState(() {
-                            //           ab("0");
-                            //         });
-                            //       },
-                            //       child: Container(
-                            //         height: totalhight / 22.857142,
-                            //         width: totalwidth / 12,
-                            //         color: Colors.grey,
-                            //         child: Center(
-                            //             child: Text(
-                            //           "0",
-                            //           style: TextStyle(fontSize: 22),
-                            //         )),
-                            //       ),
-                            //     ))),)
-                            // ),
-                            // ]
                           ),
                         ))
                       ],
@@ -670,12 +390,12 @@ class _mp2State extends State<mp2> {
   String firstdata = "";
 
   int i = 0;
-
-  void ab(String i) {
-    setState(() {
-      a = a + i;
-    });
-  }
+  //
+  // void ab(String i) {
+  //   setState(() {
+  //     a = a + i;
+  //   });
+  // }
 
   List<Widget> sum() {
     List<Widget> dd = [];
