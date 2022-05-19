@@ -17,83 +17,6 @@ class _mp2State extends State<mp2> {
   String da = "my";
   int m = 0, n = 0;
 
-  List<String> ans = [
-    "10",
-    "25",
-    "6",
-    "14",
-    "128",
-    "7",
-    "50",
-    "1025",
-    "100",
-    "3",
-    "212",
-    "3011",
-    "14",
-    "16",
-    "1",
-    "2",
-    "44",
-    "45",
-    "625",
-    "1",
-    "13",
-    "47",
-    "50",
-    "34",
-    "6",
-    "41",
-    "16",
-    "126",
-    "82",
-    "14",
-    "7",
-    "132",
-    "34",
-    "48",
-    "42",
-    "288",
-    "45",
-    "4",
-    "111",
-    "47",
-    "27",
-    "87",
-    "22",
-    "253",
-    "12",
-    "38",
-    "178",
-    "1",
-    "6",
-    "10",
-    "2",
-    "20",
-    "7",
-    "511",
-    "143547",
-    "84",
-    "11",
-    "27",
-    "3",
-    "5",
-    "39",
-    "31",
-    "10",
-    "130",
-    "22",
-    "3",
-    "14",
-    "42",
-    "164045",
-    "11",
-    "481",
-    "86",
-    "84",
-    "13",
-    "8"
-  ];
   String a = "";
 
   @override
@@ -179,7 +102,7 @@ class _mp2State extends State<mp2> {
                                 style: TextStyle(fontSize: 25),
                               ),
                               content: new Text(
-                                ans[widget.ad],
+                                gdata.ans[widget.ad],
                                 style: TextStyle(fontFamily: "Smash"),
                               ),
                               actions: [
@@ -271,15 +194,13 @@ class _mp2State extends State<mp2> {
                             child: InkWell(
                           onTap: () {
                             setState(() {
-                              if (a == ans[widget.ad]) {
+                              if (a == gdata.ans[widget.ad]) {
                                 String str = gdata.statuslist[widget.ad];
                                 print(str);
                                 if (str == "clear") {
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
-                                      widget.ad++;
-                                      gdata.prefs!.setInt("cnt", widget.ad);
                                       return mp3(widget.ad);
                                     },
                                   ));
@@ -298,6 +219,7 @@ class _mp2State extends State<mp2> {
                                   gdata.statuslist[widget.ad] = "clear";
                                   gdata.prefs!
                                       .setString("status${widget.ad}", "clear");
+
                                   setState(() {
                                     widget.ad++;
                                   });
@@ -305,7 +227,7 @@ class _mp2State extends State<mp2> {
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
-                                      return mp3(widget.ad-1);
+                                      return mp3(widget.ad - 1);
                                     },
                                   ));
                                 }
@@ -390,7 +312,7 @@ class _mp2State extends State<mp2> {
   String firstdata = "";
 
   int i = 0;
-  //
+
   // void ab(String i) {
   //   setState(() {
   //     a = a + i;

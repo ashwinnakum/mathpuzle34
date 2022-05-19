@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mathpuzle/gdata.dart';
+import 'package:mathpuzle/main.dart';
 import 'package:mathpuzle/mp2.dart';
 
 class mp1 extends StatefulWidget {
@@ -22,16 +23,20 @@ class _mp1State extends State<mp1> {
           child: Expanded(
               child: Container(
         child: Column(
-          children: [
-            Container(
-              child: Text(
-                "Select Puzzle",
-                style: TextStyle(
-                    fontSize: totalhight / 20,
-                    fontFamily: da,
-                    color: Color(0xFF272791)),
-              ),
+          children: [Row(children: [ Container(margin: EdgeInsets.fromLTRB(80, 0, 50, 0),
+            child: Text(
+              "Select Puzzle",
+              style: TextStyle(
+                  fontSize: totalhight / 20,
+                  fontFamily: da,
+                  color: Color(0xFF272791)),
             ),
+          ),InkWell(onTap:() {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+              return mathpuzzel();
+            },));
+          },child: Icon(Icons.home))],),
+           
             Container(
               height: totalhight / 1.28,
               child: GridView.builder(
