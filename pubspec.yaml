@@ -39,6 +39,7 @@ dependencies:
   shared_preferences:
   fluttertoast:
   awesome_dialog:
+  permission_handler:
 
 
 dev_dependencies:

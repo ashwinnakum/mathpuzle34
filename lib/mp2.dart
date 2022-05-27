@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -58,12 +59,12 @@ class _mp2State extends State<mp2> {
                                 widget.ad++;
                               });
                               gdata.prefs!.setInt("cnt", widget.ad);
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(
-                                builder: (context) {
-                                  return mp2(widget.ad);
-                                },
-                              ));
+                              // Navigator.pushReplacement(context,
+                              //     MaterialPageRoute(
+                              //   builder: (context) {
+                              //     return mp2(widget.ad);
+                              //   },
+                              // ));
                             }
                           });
                         },
@@ -331,38 +332,34 @@ class _mp2State extends State<mp2> {
     List<Widget> dd = [];
     for (int i = 0; i <= 9; i++) {
       dd.add(Expanded(
-          child: InkWell(
-        onTap: () {
-          setState(() {
-            a = "$a$i";
-          });
-        },
-        child: Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 7),
-            height: 40,
-            width: 35,
-            color: Colors.black,
-            child: Center(
-                child: InkWell(
-              onTap: () {
-                setState(() {
-                  a = "$a$i";
-                });
-              },
-              child: Container(
-                height: 35,
-                width: 33,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.blueGrey, Colors.grey, Colors.white])),
-                child: Center(
-                    child: Text(
-                  "$i",
-                  style: TextStyle(fontSize: 20),
-                )),
-              ),
-            ))),
-      )));
+          child: Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 7),
+              height: 40,
+              width: 35,
+              color: Colors.black,
+              child: Center(
+                  child: InkWell(
+                onTap: () {
+                  setState(() {
+                    a = "$a$i";
+                  });
+                },
+                child: Container(
+                  height: 35,
+                  width: 33,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                    Colors.blueGrey,
+                    Colors.grey,
+                    Colors.white
+                  ])),
+                  child: Center(
+                      child: Text(
+                    "$i",
+                    style: TextStyle(fontSize: 20),
+                  )),
+                ),
+              )))));
     }
     return dd;
   }
@@ -374,16 +371,37 @@ class _mp2State extends State<mp2> {
         return AlertDialog(
           title: Text("Are you exit"),
           actions: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) {
-                      return mathpuzzel();
-                    },
-                  ));
-                },
-                child: Text("Yes")),
+            AnimatedButton(
+              text: 'Warning Dialog',
+              color: Colors.orange,
+              pressEvent: () {
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.WARNING,
+                  headerAnimationLoop: false,
+                  animType: AnimType.TOPSLIDE,
+                  showCloseIcon: true,
+                  closeIcon: const Icon(Icons.close_fullscreen_outlined),
+                  title: 'Warning',
+                  desc:
+                      'Dialog description here..................................................',
+                  btnCancelOnPress: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) {
+                        return mathpuzzel();
+                      },
+                    ));
+                  },
+                  onDissmissCallback: (type) {
+                    debugPrint('Dialog Dissmiss from callback $type');
+                  },
+                  btnOkOnPress: () {},
+                ).show();
+              },
+            ),
+            const SizedBox(
+              height: 16,
+            ),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);

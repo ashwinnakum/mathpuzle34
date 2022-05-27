@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mathpuzle/mp1.dart';
 import 'package:mathpuzle/mp2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'gdata.dart';
 
 void main() {
@@ -33,7 +32,7 @@ class _mathpuzzelState extends State<mathpuzzel> {
     setState(() {
       ad = gdata.prefs!.getInt('cnt') ?? 0;
     });
-    for (int i = 0; i < gdata.ans.length; i++) {
+    for (int i = 0; i < 75; i++) {
       String levelstatus = gdata.prefs!.getString("status$i") ?? "pending";
       gdata.statuslist.add(levelstatus);
     }
